@@ -5,7 +5,6 @@ module MyAccountRestrictionPatch
   def self.included(base)
     base.send :include, InstanceMethods
     base.class_eval do
-      unloadable
       before_action :restrict_parameters, only: :account
     end
   end
