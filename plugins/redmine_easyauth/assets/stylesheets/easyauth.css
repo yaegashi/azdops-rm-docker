@@ -1,0 +1,25 @@
+#easyauth-form {margin:2em auto; padding:20px; width:340px; border:1px solid #FDBF3B; background-color:#FFEBC1; border-radius:4px; box-sizing: border-box;}
+#easyauth-form label {display:block; margin-bottom:5px; font-weight:bold;}
+#easyauth-form label[for=autologin] {font-weight:normal;}
+#easyauth-form input {height: 29px;}
+#easyauth-form input[type=text], #easyauth-form input[type=password], #easyauth-form input[type=submit] {display: block; width: 100%;}
+#easyauth-form input[type=text], #easyauth-form input[type=password] {margin-bottom: 15px;}
+#easyauth-form a.account_switch {float:right; font-weight:normal;}
+#easyauth-form h3 {text-align: center;}
+
+#easyauth-announcement {
+  margin: 2em auto;
+  padding: 0px 20px;
+  width: 340px;
+  font-size: 1.1em;
+  border: 1px solid #9fcf9f;
+  background-color: #dfffdf;
+  border-radius: 4px;
+  color: #005f00;
+  box-sizing: border-box;
+}
+
+#easyauth-announcement a {
+  color: #c11;
+  text-decoration: none;
+}
