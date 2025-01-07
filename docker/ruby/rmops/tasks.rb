@@ -9,15 +9,19 @@ module RMOps::Tasks
   def self.create_symlinks
     enter_dir do
       rmtree(['files', 'public/plugin_assets'])
-      makedirs([FILES_DIR, CONFIG_DIR, PLUGINS_DIR, PUBLIC_THEMES_DIR, PUBLIC_PLUGIN_ASSETS_DIR,
+      makedirs([FILES_DIR, CONFIG_DIR, PLUGINS_DIR, THEMES_DIR, PUBLIC_THEMES_DIR, PUBLIC_PLUGIN_ASSETS_DIR,
                 ETC_DIR, STATICSITE_DIR, BACKUPS_DIR])
       symlink(FILES_DIR, './files', force: true)
       symlink(PUBLIC_PLUGIN_ASSETS_DIR, './public/plugin_assets', force: true)
       Dir.glob(File.join(PLUGINS_DIR, '*')).each do |path|
         symlink(path, 'plugins', force: true) if File.directory?(path)
       end
+      themes_dir = File.exist?('themes') ? 'themes' : 'public/themes'
       Dir.glob(File.join(PUBLIC_THEMES_DIR, '*')).each do |path|
-        symlink(path, 'public/themes', force: true) if File.directory?(path)
+        symlink(path, themes_dir, force: true) if File.directory?(path)
+      end
+      Dir.glob(File.join(THEMES_DIR, '*')).each do |path|
+        symlink(path, themes_dir, force: true) if File.directory?(path)
       end
       if File.exist?(CONFIG_LINK)
         Dir.glob(File.join(CONFIG_DIR, '*')).each do |path|
@@ -265,6 +269,7 @@ module RMOps::Tasks
       symlink_directory(FILES_DIR, dir)
       symlink_directory(CONFIG_DIR, dir)
       symlink_directory(PLUGINS_DIR, dir)
+      symlink_directory(THEMES_DIR, dir)
       symlink_directory(PUBLIC_DIR, dir)
       run "tar -C #{dir} -f #{tgzpath} -czvvh --owner root --group root --mode a+rX,og-w ."
       logger.info "Done dump to #{tgzpath}"
@@ -291,6 +296,7 @@ module RMOps::Tasks
       restore_directory(dir, FILES_DIR)
       restore_directory(dir, CONFIG_DIR)
       restore_directory(dir, PLUGINS_DIR)
+      restore_directory(dir, THEMES_DIR)
       restore_directory(dir, PUBLIC_DIR)
       dbdump = File.join(dir, 'db.dump')
       dburl = RMOps::DatabaseURL.new(DATABASE_URL)
