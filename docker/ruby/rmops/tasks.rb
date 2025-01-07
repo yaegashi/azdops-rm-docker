@@ -109,7 +109,7 @@ module RMOps::Tasks
       if DATABASE_URL and !File.exist?('config/database.yml')
         dburl = RMOps::DatabaseURL.new(DATABASE_URL)
         File.open('config/database.yml', 'w') do |file|
-          file.puts %({"0":{"adapter":"#{dburl.db.type}"}})
+          file.puts "x:\n  adapter: #{dburl.db.type}"
         end
       end
     end
