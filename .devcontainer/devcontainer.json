@@ -1,5 +1,5 @@
 {
-	"image": "ghcr.io/yaegashi/dx2devops-rm-docker:latest",
+	"image": "ghcr.io/yaegashi/azdops-rm-docker/devcontainer:latest",
 	"customizations": {
 		"vscode": {
 			"extensions": [
