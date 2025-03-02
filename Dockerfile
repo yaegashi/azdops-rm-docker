@@ -14,11 +14,15 @@ COPY docker/build2 /docker/build2
 COPY redmine/Gemfile* /redmine/
 RUN /docker/build2/run.sh
 
-# Copy all files, build stage 3
+# Build stage 3
 COPY redmine /redmine/
 COPY plugins /redmine/plugins/
-COPY docker /docker/
+COPY docker/rmops /docker/rmops
+COPY docker/ruby /docker/ruby
+COPY docker/build3 /docker/build3
 RUN /docker/build3/run.sh
 
-ENTRYPOINT ["rmops"]
-CMD ["entrypoint"]
+# Copy service files
+COPY docker/service /docker/service
+
+ENTRYPOINT ["rmops", "entrypoint"]

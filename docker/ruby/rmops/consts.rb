@@ -10,6 +10,7 @@ module RMOps::Consts
 
   REDMINE_DIR = ENV['REDMINE_DIR'] || '/redmine'
   WWWROOT_DIR = ENV['WWWROOT_DIR'] || '/home/site/wwwroot'
+  SERVICE_DIR = ENV['SERVICE_DIR'] || '/docker/service'
   ETC_DIR = File.join(WWWROOT_DIR, 'etc')
   ENV_JSON = File.join(ETC_DIR, 'env.json')
   PASSWORD_TXT = File.join(ETC_DIR, 'password.txt')

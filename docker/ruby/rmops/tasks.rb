@@ -128,7 +128,7 @@ module RMOps::Tasks
       end
     end
     logger.info 'Start OpenSSH server'
-    run '/usr/sbin/sshd'
+    runexec '/usr/sbin/sshd'
   rescue StandardError => e
     logger.error e.to_s
     logger.warn 'Skip OpenSSH server'
@@ -173,7 +173,7 @@ module RMOps::Tasks
     logger.info 'Starting rails server'
     enter_dir do
       File.unlink('tmp/pids/server.pid') if File.exist?('tmp/pids/server.pid')
-      run 'rails server -b 0.0.0.0 -p 8080'
+      runexec 'rails server -b 0.0.0.0 -p 8080'
     end
   end
 
@@ -211,7 +211,7 @@ module RMOps::Tasks
   def start_sidekiq
     logger.info 'Starting sidekiq'
     enter_dir do
-      run 'sidekiq'
+      runexec 'sidekiq'
     end
   end
 

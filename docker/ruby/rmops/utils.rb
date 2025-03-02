@@ -13,7 +13,12 @@ module RMOps::Utils
 
   def run(cmdline, opts = { exception: true })
     logger.info "Run #{cmdline.inspect}"
-    system(cmdline, opts)
+    Kernel.system(cmdline, opts)
+  end
+
+  def runexec(cmdline, opts = {})
+    logger.info "Exec #{cmdline.inspect}"
+    Kernel.exec(cmdline, opts)
   end
 
   def symlink(src, dst, **opts)

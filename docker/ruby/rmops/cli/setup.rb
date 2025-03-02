@@ -1,7 +1,7 @@
 require 'fileutils'
 
 class RMOps::CLI
-  desc 'setup', "Set up Redmine instance"
+  desc 'setup', 'Set up Redmine instance'
   def setup
     RMOps::Tasks.create_symlinks
     RMOps::Tasks.initialize_database_config
