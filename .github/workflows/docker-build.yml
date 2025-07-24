@@ -1,0 +1,78 @@
+name: Docker build
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        required: true
+        type: string
+        default: "redmica"
+      redmine_repository:
+        required: true
+        type: string
+        default: "redmica/redmica"
+      redmine_ref:
+        required: true
+        type: string
+        default: "master"
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+      redmine_repository:
+        required: true
+        type: string
+      redmine_ref:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-24.04
+    steps:
+      -
+        name: Checkout repository
+        uses: actions/checkout@v4
+      -
+        name: Checkout redmine
+        uses: actions/checkout@v4
+        with:
+          repository: "${{inputs.redmine_repository}}"
+          ref: "${{inputs.redmine_ref}}"
+          path: redmine
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: "${{env.REGISTRY}}/${{github.repository}}/${{inputs.image_name}}"
+          tags: |
+            type=ref,event=branch,prefix=${{inputs.redmine_ref}}-
+            type=ref,event=tag,prefix=${{inputs.redmine_ref}}-
+      -
+        name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ startsWith(github.ref, 'refs/tags/') && format('{0}/{1}/{2}:{3}', env.REGISTRY, github.repository, inputs.image_name, inputs.redmine_ref) || '' }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}

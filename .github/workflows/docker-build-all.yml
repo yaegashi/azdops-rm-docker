@@ -1,0 +1,32 @@
+name: Docker build all
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  docker-build-redmica:
+    uses: ./.github/workflows/docker-build.yml
+    secrets: inherit
+    with:
+      image_name: "redmica"
+      redmine_repository: "redmica/redmica"
+      redmine_ref: "v3.2.3"
+  docker-build-redmine:
+    uses: ./.github/workflows/docker-build.yml
+    secrets: inherit
+    with:
+      image_name: "redmine"
+      redmine_repository: "redmine/redmine"
+      redmine_ref: "6.0.6"
