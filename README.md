@@ -44,7 +44,7 @@ Choose one of the supported profiles: `sqlite`, `mysql`, `mariadb`, `postgres`.
         * The username is `root` for `mysql` or `mariadb`, and `postgres` for `postgres`.
         * The password is `secret`.
     3. Run `rmops setup`.  This command does the initial migration tasks.  The admin password can be found in `/home/site/wwwroot/etc/password.txt`.
-    4. Run `rmops env set mode rails`.  This command sets the operation mode of rails in service.
+    4. Run `rmops env set rails enable`.  This command make sv run rails server normally.
     5. Run `rmops sv restart`.  This command restarts all services in the container.
     6. Run `exit` to quit the shell in the redmine container.
 8. Open http://localhost:8080 in your web browser to test the Redmine app.
