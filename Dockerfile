@@ -1,4 +1,5 @@
-FROM ruby:3.4-bookworm
+ARG BASE_IMAGE=ruby:3.4-bookworm
+FROM ${BASE_IMAGE}
 
 ENV RAILS_ENV production
 ENV RAILS_LOG_TO_STDOUT true

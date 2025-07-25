@@ -7,6 +7,10 @@ on:
         required: true
         type: string
         default: "redmica"
+      base_image:
+        required: true
+        type: string
+        default: "ruby:3.4-bookworm"
       redmine_repository:
         required: true
         type: string
@@ -18,6 +22,9 @@ on:
   workflow_call:
     inputs:
       image_name:
+        required: true
+        type: string
+      base_image:
         required: true
         type: string
       redmine_repository:
@@ -71,6 +78,8 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
+          build-args: |
+            BASE_IMAGE=${{ inputs.base_image }}
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ startsWith(github.ref, 'refs/tags/') && format('{0}/{1}/{2}:{3}', env.REGISTRY, github.repository, inputs.image_name, inputs.redmine_ref) || '' }}

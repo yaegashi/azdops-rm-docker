@@ -21,6 +21,7 @@ jobs:
     secrets: inherit
     with:
       image_name: "redmica"
+      base_image: "ruby:3.4-bookworm"
       redmine_repository: "redmica/redmica"
       redmine_ref: "v3.2.3"
   docker-build-redmine:
@@ -28,5 +29,6 @@ jobs:
     secrets: inherit
     with:
       image_name: "redmine"
+      base_image: "ruby:3.3-bookworm"
       redmine_repository: "redmine/redmine"
       redmine_ref: "6.0.6"
