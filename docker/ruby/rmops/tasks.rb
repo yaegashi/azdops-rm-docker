@@ -119,21 +119,6 @@ module RMOps::Tasks
     end
   end
 
-  def start_openssh_server
-    logger.info 'Initialize /root/.ssh/environment'
-    Dir.mkdir('/root/.ssh', 0o700) unless File.exist?('/root/.ssh')
-    File.open('/root/.ssh/environment', 'w') do |file|
-      ENV.each do |k, v|
-        file.puts "#{k}=#{v}"
-      end
-    end
-    logger.info 'Start OpenSSH server'
-    runexec '/usr/sbin/sshd'
-  rescue StandardError => e
-    logger.error e.to_s
-    logger.warn 'Skip OpenSSH server'
-  end
-
   def start_standby_server(port = 8080)
     logger.info 'Starting standby server'
     pid = fork do

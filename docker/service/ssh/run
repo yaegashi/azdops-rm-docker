@@ -1,0 +1,5 @@
+#!/bin/sh
+mkdir -p /root/.ssh -m 0700
+printenv >/root/.ssh/environment
+exec 2>&1
+exec /usr/sbin/sshd -D -E /dev/stderr

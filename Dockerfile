@@ -26,4 +26,5 @@ RUN /docker/build3/run.sh
 # Copy service files
 COPY docker/service /docker/service
 
+EXPOSE 8080 2222
 ENTRYPOINT ["rmops", "entrypoint"]

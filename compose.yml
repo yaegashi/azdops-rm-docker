@@ -5,6 +5,7 @@ x-redmine: &redmine
   env_file:
     - docker.env
   ports:
+    - 2222:2222
     - 8080:8080
   volumes:
     - ./data/wwwroot:/home/site/wwwroot
